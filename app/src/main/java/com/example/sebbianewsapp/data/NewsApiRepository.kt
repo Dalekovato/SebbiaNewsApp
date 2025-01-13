@@ -34,16 +34,6 @@ class NewsApiRepository @Inject constructor(
 
     }
 
-//    suspend fun getCategoriesNews(id: Long, page: Int) : Response<BriefResponseNewsDomain>{
-//
-//        val response = iNewsApiService.getCategoriesNews(id,page)
-//
-//        return Response.success(
-//            BriefResponseMapper(
-//                response.body()?: ResponseBriefNewsDto(0, emptyList())
-//            ).briefResponseMapper
-//        )
-//    }
 
      fun getCategoriesNews(id: Long) : Flow<PagingData<BriefNewsDomain>> {
         return Pager(

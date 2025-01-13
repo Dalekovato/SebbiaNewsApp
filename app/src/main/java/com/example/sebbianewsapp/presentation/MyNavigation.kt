@@ -1,5 +1,6 @@
 package com.example.sebbianewsapp.presentation
 
+import android.util.Log
 import androidx.compose.runtime.Composable
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
@@ -35,14 +36,17 @@ fun MyNavigation(
                     )
                 }
 
-                composable(route = Route.BriefScreen().name + "/{id}") { backStackEntry ->
+                composable(route = "brief/{id}") { backStackEntry ->
                     val id = backStackEntry.arguments?.getString("id")?.toLongOrNull() ?: 0L
                     BriefScreen(id, onDetailsScreen = { detailsId ->
                         navController.navigate("news_detail/$detailsId")
+
                     })
+
+
                 }
 
-                composable(route = Route.DetailScreen().name+ "/{id}") { backStackEntry ->
+                composable(route = "news_detail/{id}") { backStackEntry ->
                     val id = backStackEntry.arguments?.getString("id")?.toLongOrNull() ?: 0L
                     DetailsScreen(id)
                 }

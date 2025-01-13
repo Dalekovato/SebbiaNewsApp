@@ -1,5 +1,6 @@
 package com.example.sebbianewsapp.data
 
+import android.util.Log
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import com.example.sebbianewsapp.domain.mapper.BriefMapper
@@ -18,30 +19,33 @@ class NewsBriefPageSource @Inject constructor(
 
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, BriefNewsDomain> {
 
-        return   try {
-
-            val page = params.key?: 0
+        return try {
+            val page = params.key ?: 0
             val response = iNewsApiService.getCategoriesNews(id, page).body()?.list?.mapNotNull {
                 BriefMapper(it).briefMapper
             } ?: emptyList()
 
-
-            val nextPage = if (response.isEmpty() == true) null else response.size.plus(page).plus(1)
-            val prevPage = if (page == 1 ) null else response.size.minus(10)
-
-            LoadResult.Page(
-                data = response,
-                nextKey = nextPage,
-                prevKey = prevPage
-            )
-
-        }catch (e: HttpException) {
-            return LoadResult.Error(e)
+            // Если список пустой, возвращаем пустую страницу
+            if (response.isEmpty()) {
+                LoadResult.Page(
+                    data = emptyList(),
+                    nextKey = null,
+                    prevKey = if (page == 0) null else page - 1
+                )
+            } else {
+                val nextPage = if (response.size < params.loadSize) null else page + 1
+                LoadResult.Page(
+                    data = response,
+                    nextKey = nextPage,
+                    prevKey = if (page == 0) null else page - 1
+                )
+            }
+        } catch (e: HttpException) {
+            LoadResult.Error(e)
         } catch (e: Exception) {
-            return LoadResult.Error(e)
+            LoadResult.Error(e)
         }
-
     }
-
-
 }
+
+

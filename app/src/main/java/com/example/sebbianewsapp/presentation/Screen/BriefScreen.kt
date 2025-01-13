@@ -1,5 +1,6 @@
 package com.example.sebbianewsapp.presentation.Screen
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
@@ -23,35 +24,39 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.TimeZone
 
-
 @Composable
 fun BriefScreen(
     id: Long,
-    onDetailsScreen :(Long) -> Unit
+    onDetailsScreen: (Long) -> Unit,
 ) {
 
     val briefViewModel: BriefViewModel = hiltViewModel()
     val data = briefViewModel.getBrief(id).collectAsLazyPagingItems()
     val focusManager = LocalFocusManager.current
 
+
     LazyColumn(
         Modifier
             .fillMaxSize()
             .padding(top = 40.dp)
     ) {
+
         items(data.itemSnapshotList) { post ->
             post?.let {
                 Card(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(vertical = 8.dp)
+                        .padding(8.dp)
                         .clickable(
                             indication = null,
                             interactionSource = remember { MutableInteractionSource() }
                         )
                         {
-                            focusManager.clearFocus()
-                            onDetailsScreen(it.id.toLong())
+
+                                focusManager.clearFocus()
+                                onDetailsScreen(it.id.toLong())
+
+
                         },
                     colors = CardDefaults.cardColors(MaterialTheme.colorScheme.onPrimary),
                     shape = MaterialTheme.shapes.small,
@@ -60,13 +65,15 @@ fun BriefScreen(
                     )
                 ) {
 
-                    Column {
-                        Text(text = ParseDate(it.date)+"\n")
-                        Text(text = it.title+ "\n")
-                        Text(text = it.shortDescription+ "\n")
+                    Column(Modifier.padding(5.dp)) {
+                        Text(text = ParseDate(it.date) + "\n")
+                        Text(text = it.title + "\n")
+                        Text(text = it.shortDescription + "\n")
                     }
 
                 }
+            }?: run {
+                Text(text = "Loading...")
             }
 
         }
@@ -75,14 +82,14 @@ fun BriefScreen(
 }
 
 @Composable
-fun ParseDate(oldDate:String):String {
+fun ParseDate(oldDate: String): String {
 
     // Создаем объект SimpleDateFormat
     val sdf = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'")
     sdf.timeZone = TimeZone.getTimeZone("UTC")
 
     // Преобразуем строку в Date
-  val date: Date = sdf.parse(oldDate)
+    val date: Date = sdf.parse(oldDate)
 
     return date.toString()
 

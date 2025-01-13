@@ -49,10 +49,10 @@ fun DetailsScreen(id:Long) {
             verticalArrangement = Arrangement.Center
         ) {
             category?.let {
-                Text(text = ParseDate(it.date)+"\n")
+                Text(text = ParseDate(it.date) + "\n")
                 Text(text = it.title + "\n")
                 Text(text = it.shortDescription + "\n")
-                HtmlText(it.fullDescription )
+                HtmlText(it.fullDescription)
             } ?: run {
                 Text(text = "Loading...")
             }

@@ -26,6 +26,7 @@ class DetailsViewModel @Inject constructor(
             val response = iNewsRepository.getNews(id)
             if (response.isSuccessful) {
                 _all.value = response.body()?.news
+
             } else {
                 Log.d("checkData", "Failed to load details: ${response.errorBody()}")
             }
