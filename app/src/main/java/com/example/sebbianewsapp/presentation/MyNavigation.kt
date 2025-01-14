@@ -38,7 +38,9 @@ fun MyNavigation(
 
                 composable(route = "brief/{id}") { backStackEntry ->
                     val id = backStackEntry.arguments?.getString("id")?.toLongOrNull() ?: 0L
-                    BriefScreen(id, onDetailsScreen = { detailsId ->
+                    BriefScreen(
+                        id,
+                        onDetailsScreen = { detailsId ->
                         navController.navigate("news_detail/$detailsId")
 
                     })

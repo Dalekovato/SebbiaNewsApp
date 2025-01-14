@@ -1,9 +1,14 @@
 package com.example.sebbianewsapp.presentation.ViewModel
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
+import androidx.paging.cachedIn
 import com.example.sebbianewsapp.domain.interactor.INewsRepository
 import com.example.sebbianewsapp.domain.model.BriefNewsDomain
+import com.example.sebbianewsapp.domain.model.CategoriesDomain
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -13,8 +18,12 @@ class BriefViewModel @Inject constructor(
     private val iNewsRepository: INewsRepository,
 ) : ViewModel() {
 
+
+
     fun getBrief(id: Long): Flow<PagingData<BriefNewsDomain>> {
         return iNewsRepository.getCategoriesNews(id)
     }
+
+
 
 }

@@ -1,8 +1,7 @@
 package com.example.sebbianewsapp.presentation.Screen
 
-import android.util.Log
+import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
@@ -13,9 +12,7 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -24,6 +21,7 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.TimeZone
 
+@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun BriefScreen(
     id: Long,
@@ -32,7 +30,7 @@ fun BriefScreen(
 
     val briefViewModel: BriefViewModel = hiltViewModel()
     val data = briefViewModel.getBrief(id).collectAsLazyPagingItems()
-    val focusManager = LocalFocusManager.current
+
 
 
     LazyColumn(
@@ -46,18 +44,10 @@ fun BriefScreen(
                 Card(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(8.dp)
-                        .clickable(
-                            indication = null,
-                            interactionSource = remember { MutableInteractionSource() }
-                        )
-                        {
-
-                                focusManager.clearFocus()
+                        .clickable {
                                 onDetailsScreen(it.id.toLong())
-
-
-                        },
+                        }
+                        .padding(8.dp),
                     colors = CardDefaults.cardColors(MaterialTheme.colorScheme.onPrimary),
                     shape = MaterialTheme.shapes.small,
                     elevation = CardDefaults.cardElevation(
@@ -79,7 +69,9 @@ fun BriefScreen(
         }
     }
 
+
 }
+
 
 @Composable
 fun ParseDate(oldDate: String): String {
