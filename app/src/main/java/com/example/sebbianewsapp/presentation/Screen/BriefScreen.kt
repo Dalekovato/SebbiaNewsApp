@@ -45,7 +45,7 @@ fun BriefScreen(
                     modifier = Modifier
                         .fillMaxSize()
                         .clickable {
-                                onDetailsScreen(it.id.toLong())
+                            onDetailsScreen(it.id.toLong())
                         }
                         .padding(8.dp),
                     colors = CardDefaults.cardColors(MaterialTheme.colorScheme.onPrimary),
@@ -62,16 +62,14 @@ fun BriefScreen(
                     }
 
                 }
-            }?: run {
+            } ?: run {
                 Text(text = "Loading...")
             }
 
         }
     }
 
-
 }
-
 
 @Composable
 fun ParseDate(oldDate: String): String {

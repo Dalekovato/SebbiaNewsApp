@@ -10,50 +10,49 @@ import com.example.sebbianewsapp.presentation.Screen.BriefScreen
 import com.example.sebbianewsapp.presentation.Screen.CategoryScreen
 import com.example.sebbianewsapp.presentation.Screen.DetailsScreen
 
-sealed class Route{
+sealed class Route {
     data class CategoryScreen(val name: String = "Category") : Route()
-    data class BriefScreen(val name: String ="Brief") : Route()
+    data class BriefScreen(val name: String = "Brief") : Route()
     data class DetailScreen(val name: String = "Detail") : Route()
 }
 
 @Suppress("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun MyNavigation(
-    navController: NavHostController
+    navController: NavHostController,
 ) {
 
-        NavHost(
-            navController = navController,
-            startDestination = "category"
-        ){
+    NavHost(
+        navController = navController,
+        startDestination = "category"
+    ) {
 
-            navigation(startDestination = Route.CategoryScreen().name, route = "category") {
-                composable(route = Route.CategoryScreen().name) {
-                    CategoryScreen(
-                        onBriefNews = { id ->
-                            navController.navigate("brief/$id")
-                        }
-                    )
-                }
+        navigation(startDestination = Route.CategoryScreen().name, route = "category") {
+            composable(route = Route.CategoryScreen().name) {
+                CategoryScreen(
+                    onBriefNews = { id ->
+                        navController.navigate("brief/$id")
+                    }
+                )
+            }
 
-                composable(route = "brief/{id}") { backStackEntry ->
-                    val id = backStackEntry.arguments?.getString("id")?.toLongOrNull() ?: 0L
-                    BriefScreen(
-                        id,
-                        onDetailsScreen = { detailsId ->
+            composable(route = "brief/{id}") { backStackEntry ->
+                val id = backStackEntry.arguments?.getString("id")?.toLongOrNull() ?: 0L
+                BriefScreen(
+                    id,
+                    onDetailsScreen = { detailsId ->
                         navController.navigate("news_detail/$detailsId")
 
                     })
 
+            }
 
-                }
-
-                composable(route = "news_detail/{id}") { backStackEntry ->
-                    val id = backStackEntry.arguments?.getString("id")?.toLongOrNull() ?: 0L
-                    DetailsScreen(id)
-                }
+            composable(route = "news_detail/{id}") { backStackEntry ->
+                val id = backStackEntry.arguments?.getString("id")?.toLongOrNull() ?: 0L
+                DetailsScreen(id)
             }
         }
+    }
 }
 
 

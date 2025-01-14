@@ -5,12 +5,11 @@ import com.example.sebbianewsapp.domain.model.CategoriesDomain
 
 class CategoriesMapper(categoriesDto: CategoriesDto) {
 
-    val categoriesMapper by lazy{
+    val categoriesMapper by lazy {
         CategoriesDomain(
-            id = categoriesDto.id ?:0 ,
+            id = categoriesDto.id ?: 0,
             name = categoriesDto.name.orEmpty(),
         )
     }
-
 
 }

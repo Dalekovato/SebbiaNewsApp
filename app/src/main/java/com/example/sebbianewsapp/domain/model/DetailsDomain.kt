@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class DetailsDomain (
+data class DetailsDomain(
 
     val id: Int,
     val title: String,
@@ -12,4 +12,4 @@ data class DetailsDomain (
     val shortDescription: String,
     val fullDescription: String,
 
-): Parcelable
+    ) : Parcelable

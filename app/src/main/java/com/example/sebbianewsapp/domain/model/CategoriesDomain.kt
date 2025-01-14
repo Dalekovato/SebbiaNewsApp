@@ -4,9 +4,9 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 @Parcelize
-data class CategoriesDomain (
+data class CategoriesDomain(
 
-    val id : Int,
+    val id: Int,
     val name: String,
 
-): Parcelable
+    ) : Parcelable

@@ -7,7 +7,6 @@ import com.example.sebbianewsapp.data.dto.NewsDetailsDto
 import com.example.sebbianewsapp.data.dto.ResponseBriefNewsDto
 import com.example.sebbianewsapp.data.dto.ResponseCategoriesDto
 import com.example.sebbianewsapp.data.dto.ResponseDetailsDto
-import com.example.sebbianewsapp.domain.mapper.BriefResponseMapper
 import com.example.sebbianewsapp.domain.mapper.CategoriesResponseMapper
 import com.example.sebbianewsapp.domain.mapper.DetailsResponseMapper
 import com.example.sebbianewsapp.domain.model.BriefNewsDomain
@@ -27,37 +26,31 @@ class NewsApiRepository @Inject constructor(
         val response = iNewsApiService.getAllCategories()
 
         return Response.success(
-           CategoriesResponseMapper(
-               response.body()?:ResponseCategoriesDto(0, emptyList())
-           ).categoriesResponseMapper
+            CategoriesResponseMapper(
+                response.body() ?: ResponseCategoriesDto(0, emptyList())
+            ).categoriesResponseMapper
         )
 
     }
 
-
-     fun getCategoriesNews(id: Long) : Flow<PagingData<BriefNewsDomain>> {
+    fun getCategoriesNews(id: Long): Flow<PagingData<BriefNewsDomain>> {
         return Pager(
             config = PagingConfig(pageSize = 10),
-            pagingSourceFactory = {NewsBriefPageSource(iNewsApiService,id) }).flow
+            pagingSourceFactory = { NewsBriefPageSource(iNewsApiService, id) }).flow
 
     }
 
-
-    suspend fun getNews(id: Long) : Response<DetailsResponseDomain>{
+    suspend fun getNews(id: Long): Response<DetailsResponseDomain> {
         val response = iNewsApiService.getNews(id)
-        val defaultNews = NewsDetailsDto(0,"","","","")
+        val defaultNews = NewsDetailsDto(0, "", "", "", "")
 
         return Response.success(
             DetailsResponseMapper(
-                response.body()?: ResponseDetailsDto(0, news = defaultNews)
+                response.body() ?: ResponseDetailsDto(0, news = defaultNews)
             ).detailsResponseMapper
         )
 
     }
-
-
-
-
 
 }
 

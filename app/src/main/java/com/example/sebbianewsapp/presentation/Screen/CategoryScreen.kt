@@ -24,7 +24,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.sebbianewsapp.presentation.ViewModel.CategoryViewModel
 
 @Composable
-fun CategoryScreen(onBriefNews:(Long) -> Unit) {
+fun CategoryScreen(onBriefNews: (Long) -> Unit) {
 
     val categoryViewModel: CategoryViewModel = hiltViewModel()
     val category by categoryViewModel.all.observeAsState(emptyList())
@@ -53,8 +53,8 @@ fun CategoryScreen(onBriefNews:(Long) -> Unit) {
 
         ) {
 
-            items(category){category->
-                val id : Long = category.id.toLong()
+            items(category) { category ->
+                val id: Long = category.id.toLong()
                 Button(
                     onClick = {
                         onBriefNews(id)

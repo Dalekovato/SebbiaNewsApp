@@ -23,7 +23,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.sebbianewsapp.presentation.ViewModel.DetailsViewModel
 
 @Composable
-fun DetailsScreen(id:Long) {
+fun DetailsScreen(id: Long) {
 
     val detailsViewModel: DetailsViewModel = hiltViewModel()
     val category by detailsViewModel.all.collectAsState()
@@ -64,7 +64,7 @@ fun DetailsScreen(id:Long) {
 @Composable
 fun HtmlText(
     html: String,
-){
+) {
     AndroidView(factory = { context ->
         TextView(context).apply {
             text = HtmlCompat.fromHtml(html, HtmlCompat.FROM_HTML_MODE_LEGACY)

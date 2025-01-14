@@ -7,10 +7,10 @@ class DetailsResponseMapper(responseDetailsDto: ResponseDetailsDto) {
 
     val detailsResponseMapper by lazy {
 
-      DetailsResponseDomain(
-          code = responseDetailsDto.code ?: 0,
-          news = DetailsMapper(responseDetailsDto.news).detailsMapper
-      )
+        DetailsResponseDomain(
+            code = responseDetailsDto.code ?: 0,
+            news = DetailsMapper(responseDetailsDto.news).detailsMapper
+        )
 
     }
 }

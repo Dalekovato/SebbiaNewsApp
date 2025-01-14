@@ -5,7 +5,6 @@ import com.example.sebbianewsapp.domain.model.DetailsDomain
 
 class DetailsMapper(newsDetailsDto: NewsDetailsDto?) {
 
-
     val detailsMapper by lazy {
         DetailsDomain(
             id = newsDetailsDto?.id ?: 0,

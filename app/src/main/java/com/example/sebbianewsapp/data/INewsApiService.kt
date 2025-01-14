@@ -10,21 +10,18 @@ import retrofit2.http.Query
 
 interface INewsApiService {
 
-
-    @GET("v1/news/categories")//Категории
+    @GET("v1/news/categories") //Категории
     suspend fun getAllCategories(): Response<ResponseCategoriesDto>
 
-    @GET("v1/news/categories/{id}/news")//Список кратких новостей
+    @GET("v1/news/categories/{id}/news") //Список кратких новостей
     suspend fun getCategoriesNews(
         @Path("id") id: Long,
-        @Query("page") page: Int = 0
+        @Query("page") page: Int = 0,
     ): Response<ResponseBriefNewsDto>
 
-    @GET("v1/news/details")//Полная новость
+    @GET("v1/news/details") //Полная новость
     suspend fun getNews(
-        @Query("id") id: Long
+        @Query("id") id: Long,
     ): Response<ResponseDetailsDto>
-
-
 
 }
